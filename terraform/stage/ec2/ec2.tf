@@ -1,5 +1,48 @@
 locals {
-  vpc_id = data.terraform_remote_state.vpc.vpc_id
+  vpc_id = data.terraform_remote_state.vpc.outputs.id
+}
+resource "aws_iam_role" "this" {
+  name               = "role-ec2"
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "ec2.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+EOF
+}
+
+data "aws_iam_policy_document" "bucket_policy" {
+  statement {
+    principals {
+      type        = "AWS"
+      identifiers = [aws_iam_role.this.arn]
+    }
+    actions   = ["s3:ListBucket"]
+    resources = ["arn:aws:s3:::tfstate-kozlenkov-bucket"]
+    effect    = "Allow"
+  }
+  statement {
+    principals {
+      type        = "AWS"
+      identifiers = [aws_iam_role.this.arn]
+    }
+    actions = [
+      "s3:GetObject",
+      "s3:PutObject",
+      "s3:DeleteObject"
+    ]
+    resources = ["arn:aws:s3:::tfstate-kozlenkov-bucket/stage/vpc/terraform.tfstate"]
+    effect    = "Allow"
+  }
 }
 
 data "aws_ami" "ubuntu" {
@@ -20,8 +63,14 @@ data "aws_ami" "ubuntu" {
 data "template_file" "init" {
   template = file("${path.module}/scripts/init.sh")
 }
+
 data "terraform_remote_state" "vpc" {
-  backend = "${basename(dirname(path.cwd))}/vpc/"
+  backend = "s3"
+  config = {
+    bucket = "tfstate-kozlenkov-bucket"
+    key    = "${basename(dirname(path.cwd))}/vpc//terraform.tfstate"
+    region = var.region
+  }
 }
 
 data "aws_subnet" "public" {

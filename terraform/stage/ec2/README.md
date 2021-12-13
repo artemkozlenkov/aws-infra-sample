@@ -23,15 +23,15 @@
 |------|--------|---------|
 | <a name="module_security_groups"></a> [security\_groups](#module\_security\_groups) | terraform-aws-modules/security-group/aws | 3.18.0 |
 | <a name="module_this"></a> [this](#module\_this) | terraform-aws-modules/ec2-instance/aws | 3.3.0 |
-| <a name="module_vpc"></a> [vpc](#module\_vpc) | terraform-aws-modules/vpc/aws | ~> 2.0 |
 
 ## Resources
 
 | Name | Type |
 |------|------|
+| [aws_iam_role.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
 | [aws_ami.ubuntu](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami) | data source |
+| [aws_iam_policy_document.bucket_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_subnet.public](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/subnet) | data source |
-| [aws_subnet_ids.public](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/subnet_ids) | data source |
 | [template_file.init](https://registry.terraform.io/providers/hashicorp/template/latest/docs/data-sources/file) | data source |
 | [terraform_remote_state.vpc](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/data-sources/remote_state) | data source |
 
@@ -39,8 +39,7 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_private-subnets"></a> [private-subnets](#input\_private-subnets) | n/a | `list(string)` | <pre>[<br>  "10.1.1.0/24",<br>  "10.1.2.0/24"<br>]</pre> | no |
-| <a name="input_public-subnets"></a> [public-subnets](#input\_public-subnets) | n/a | `list(string)` | <pre>[<br>  "10.1.11.0/24",<br>  "10.1.12.0/24"<br>]</pre> | no |
+| <a name="input_region"></a> [region](#input\_region) | n/a | `string` | `"eu-west-1"` | no |
 
 ## Outputs
 

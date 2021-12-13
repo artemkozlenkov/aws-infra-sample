@@ -1,8 +1,10 @@
 locals {
   bucket_name = "tfstate-kozlenkov-bucket"
+  type = basename(path.cwd)
 }
 
 resource "aws_iam_role" "this" {
+  name = "role-${local.bucket_name}"
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -19,6 +21,7 @@ resource "aws_iam_role" "this" {
 }
 EOF
 }
+
 resource "aws_kms_key" "objects" {
   description             = "KMS key is used to encrypt bucket objects"
   deletion_window_in_days = 7
@@ -30,14 +33,22 @@ data "aws_iam_policy_document" "bucket_policy" {
       type        = "AWS"
       identifiers = [aws_iam_role.this.arn]
     }
-
-    actions = [
-      "s3:ListBucket",
+    actions   = ["s3:ListBucket"]
+    resources = [module.state_bucket.s3_bucket_arn]
+    effect = "Allow"
+  }
+  statement {
+    principals {
+      type        = "AWS"
+      identifiers = [aws_iam_role.this.arn]
+    }
+    actions   = [
+      "s3:GetObject",
+      "s3:PutObject",
+      "s3:DeleteObject"
     ]
-
-    resources = [
-      "arn:aws:s3:::${local.bucket_name}",
-    ]
+    resources = ["${module.state_bucket.s3_bucket_arn}/stage/s3/state/terraform.tfstate"]
+    effect = "Allow"
   }
 }
 
@@ -64,7 +75,7 @@ module "state_bucket" {
 
   attach_deny_insecure_transport_policy = true
 
-  tags = var.tags
+  tags = merge({ Type = local.type }, var.tags)
 
   versioning = {
     enabled = true

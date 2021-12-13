@@ -2,6 +2,22 @@ locals {
   lock_key_id = "LockID"
 }
 
+data "aws_iam_policy_document" "dynamodb_policy" {
+  statement {
+    principals {
+      type        = "AWS"
+      identifiers = [aws_iam_role.this.arn]
+    }
+    actions   = [
+      "dynamodb:GetItem",
+      "dynamodb:PutItem",
+      "dynamodb:DeleteItem"
+    ]
+    resources = ["${module.dynamodb.dynamodb_table_arn}/${module.dynamodb.dynamodb_table_id}"]
+    effect = "Allow"
+  }
+}
+
 module "dynamodb" {
   source  = "terraform-aws-modules/dynamodb-table/aws"
   version = "1.1.0"

@@ -15,6 +15,7 @@ variable "tags" {
     Owner       = "Artem",
     Terraform   = true,
     Environment = "stage"
+    Type        = ""
   }
 }
 

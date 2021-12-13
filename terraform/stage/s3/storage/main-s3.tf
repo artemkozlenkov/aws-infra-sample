@@ -34,7 +34,7 @@ data "aws_iam_policy_document" "bucket_policy" {
       identifiers = [aws_iam_role.this.arn]
     }
     actions   = ["s3:ListBucket"]
-    resources = [module.state_bucket.s3_bucket_arn]
+    resources = [module.storage_bucket.s3_bucket_arn]
     effect    = "Allow"
   }
   statement {
@@ -47,7 +47,7 @@ data "aws_iam_policy_document" "bucket_policy" {
       "s3:PutObject",
       "s3:DeleteObject"
     ]
-    resources = ["${module.state_bucket.s3_bucket_arn}/${local.bucket_name}/terraform.tfstate"]
+    resources = ["${module.storage_bucket.s3_bucket_arn}/${local.bucket_name}/terraform.tfstate"]
     effect    = "Allow"
   }
 }
@@ -62,7 +62,7 @@ module "log_bucket" {
   attach_deny_insecure_transport_policy = true
 }
 
-module "state_bucket" {
+module "storage_bucket" {
   source  = "terraform-aws-modules/s3-bucket/aws"
   version = "2.11.1"
 

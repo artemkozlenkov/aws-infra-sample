@@ -20,7 +20,7 @@
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_log_bucket"></a> [log\_bucket](#module\_log\_bucket) | terraform-aws-modules/s3-bucket/aws | 2.11.1 |
-| <a name="module_state_bucket"></a> [state\_bucket](#module\_state\_bucket) | terraform-aws-modules/s3-bucket/aws | 2.11.1 |
+| <a name="module_storage_bucket"></a> [storage\_bucket](#module\_storage\_bucket) | terraform-aws-modules/s3-bucket/aws | 2.11.1 |
 
 ## Resources
 

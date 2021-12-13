@@ -33,15 +33,6 @@ data "aws_iam_policy_document" "bucket_policy" {
       type        = "AWS"
       identifiers = [aws_iam_role.this.arn]
     }
-    actions   = ["s3:ListBucket"]
-    resources = [module.state_bucket.s3_bucket_arn]
-    effect    = "Allow"
-  }
-  statement {
-    principals {
-      type        = "AWS"
-      identifiers = [aws_iam_role.this.arn]
-    }
     actions = [
       "s3:GetObject",
       "s3:PutObject",

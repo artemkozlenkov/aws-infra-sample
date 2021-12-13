@@ -1,5 +1,5 @@
 locals {
-  lock_key_id = "LockID"
+  lock_key_id         = "LockID"
   dynamodb_table_name = "tfstate_dynamodb_lock"
 }
 

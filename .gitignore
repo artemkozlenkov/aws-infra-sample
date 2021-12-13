@@ -1,4 +1,7 @@
 **/**/.terraform
 **/**/terraform.tfvars
 **/**/provider.tf
+**/**/terraform.tfstate
+**/**/terraform.tfstate.backup
+**/**/terraform.tfstate.backup.json
 .idea

@@ -1,5 +1,6 @@
 locals {
   lock_key_id = "LockID"
+  dynamodb_table_name = "tfstate_dynamodb_lock"
 }
 
 data "aws_iam_policy_document" "dynamodb_policy" {
@@ -22,7 +23,7 @@ module "dynamodb" {
   source  = "terraform-aws-modules/dynamodb-table/aws"
   version = "1.1.0"
 
-  name     = var.dynamodb_table_name
+  name     = local.dynamodb_table_name
   hash_key = local.lock_key_id
 
   attributes = [

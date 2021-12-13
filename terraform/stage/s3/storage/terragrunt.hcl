@@ -3,7 +3,7 @@ include {
 }
 terraform{
   after_hook "backup_tfstate" {
-    commands     = ["plan"]
+    commands     = ["apply"]
     execute      = ["/bin/bash", "-c", "export AWS_PROFILE=artem && terraform state pull > terraform.tfstate.backup"]
   }
 }

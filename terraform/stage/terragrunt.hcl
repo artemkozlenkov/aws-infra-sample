@@ -42,7 +42,7 @@ provider "aws" {
   profile                 = "artem"
   shared_credentials_file = "~/.aws/credentials"
 
-  region = "eu-west-1"
+  region = var.region
 
   skip_get_ec2_platforms      = true
   skip_metadata_api_check     = true

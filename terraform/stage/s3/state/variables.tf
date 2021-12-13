@@ -1,6 +1,4 @@
-variable "region" {
-  default = "eu-west-1"
-}
+variable "region" { default = "eu-west-1" }
 
 variable "dynamodb_table_billing_mode" {
   default = "PAY_PER_REQUEST"

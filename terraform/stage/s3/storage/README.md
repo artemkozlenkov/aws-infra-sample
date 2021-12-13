@@ -34,6 +34,7 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_region"></a> [region](#input\_region) | n/a | `string` | `"eu-west-1"` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | n/a | `map` | <pre>{<br>  "Environment": "stage",<br>  "Owner": "Artem",<br>  "Terraform": true<br>}</pre> | no |
 
 ## Outputs

@@ -1,10 +1,10 @@
 locals {
   bucket_name = "storage-kozlenkov-bucket"
-  type = basename(path.cwd)
+  type        = basename(path.cwd)
 }
 
 resource "aws_iam_role" "this" {
-  name = "role-${local.bucket_name}"
+  name               = "role-${local.bucket_name}"
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -35,20 +35,20 @@ data "aws_iam_policy_document" "bucket_policy" {
     }
     actions   = ["s3:ListBucket"]
     resources = [module.state_bucket.s3_bucket_arn]
-    effect = "Allow"
+    effect    = "Allow"
   }
   statement {
     principals {
       type        = "AWS"
       identifiers = [aws_iam_role.this.arn]
     }
-    actions   = [
+    actions = [
       "s3:GetObject",
       "s3:PutObject",
       "s3:DeleteObject"
     ]
     resources = ["${module.state_bucket.s3_bucket_arn}/${local.bucket_name}/terraform.tfstate"]
-    effect = "Allow"
+    effect    = "Allow"
   }
 }
 
@@ -71,7 +71,7 @@ module "state_bucket" {
   force_destroy = true
 
   attach_policy = true
-  policy = data.aws_iam_policy_document.bucket_policy.json
+  policy        = data.aws_iam_policy_document.bucket_policy.json
 
   attach_deny_insecure_transport_policy = true
 
@@ -101,7 +101,7 @@ module "state_bucket" {
         {
           days          = 30
           storage_class = "ONEZONE_IA"
-        }, {
+          }, {
           days          = 60
           storage_class = "GLACIER"
         }

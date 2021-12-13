@@ -8,13 +8,13 @@ data "aws_iam_policy_document" "dynamodb_policy" {
       type        = "AWS"
       identifiers = [aws_iam_role.this.arn]
     }
-    actions   = [
+    actions = [
       "dynamodb:GetItem",
       "dynamodb:PutItem",
       "dynamodb:DeleteItem"
     ]
     resources = ["${module.dynamodb.dynamodb_table_arn}/${module.dynamodb.dynamodb_table_id}"]
-    effect = "Allow"
+    effect    = "Allow"
   }
 }
 

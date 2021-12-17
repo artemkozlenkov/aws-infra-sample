@@ -1,6 +1,6 @@
 locals {
   lock_key_id         = "LockID"
-  dynamodb_table_name = "tfstate_dynamodb_lock"
+  dynamodb_table_name = "tfstate_${var.state_bucket_name}_lock"
 }
 
 data "aws_iam_policy_document" "dynamodb_policy" {

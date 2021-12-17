@@ -6,12 +6,12 @@ terraform {
   required_version = ">= 0.14"
 
   backend "s3" {
-    bucket = "tfstate-kozlenkov-bucket"
+    bucket = "tfstate-artem-bucket"
     key    = "${basename(get_parent_terragrunt_dir())}/${path_relative_to_include()}/terraform.tfstate"
     region = "eu-west-1"
 
     # Replace this with your DynamoDB table name!
-    dynamodb_table = "tfstate_dynamodb_lock"
+    dynamodb_table = "tfstate_artem_lock"
     encrypt        = true
   }
 
@@ -39,7 +39,7 @@ terraform {
 }
 
 provider "aws" {
-  profile                 = "artem"
+  profile                 = var.profile
   shared_credentials_file = "~/.aws/credentials"
 
   region = var.region

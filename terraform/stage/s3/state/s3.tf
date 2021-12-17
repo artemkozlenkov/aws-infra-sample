@@ -1,5 +1,5 @@
 locals {
-  bucket_name = "tfstate-kozlenkov-bucket"
+  bucket_name = "tfstate-${var.state_bucket_name}-bucket"
   type        = basename(path.cwd)
 }
 

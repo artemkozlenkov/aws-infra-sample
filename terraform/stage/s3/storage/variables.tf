@@ -7,3 +7,5 @@ variable "tags" {
     Environment = "stage"
   }
 }
+
+variable "profile" {}

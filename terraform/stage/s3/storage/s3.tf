@@ -1,5 +1,5 @@
 locals {
-  bucket_name = "storage-kozlenkov-bucket"
+  bucket_name = "storage-${var.profile}-bucket"
   type        = basename(path.cwd)
 }
 

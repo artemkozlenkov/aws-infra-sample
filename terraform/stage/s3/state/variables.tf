@@ -15,3 +15,4 @@ variable "tags" {
 
 
 variable "profile" {}
+variable "state_bucket_name" {}
